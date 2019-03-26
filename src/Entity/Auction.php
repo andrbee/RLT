@@ -17,11 +17,31 @@ class Auction {
 	const HOST_PROXY = '192.168.15.240:3128';
 
 	public function list() {
-		$html = $this->curlRequest(self::HOST_RESOURCE . self::URL_LIST_AUCTION,self::POST_FIELDS_LIST_AUCTION);
-		echo '<pre/>';
-		print_r($html['content']);
-		exit;
-	}
+        $html = $this->curlRequest(self::HOST_RESOURCE . self::URL_LIST_AUCTION, self::POST_FIELDS_LIST_AUCTION);
+        $crawler = new Crawler($html['content']);
+        $items = $crawler->filter('.preview');
+        $auctions = $items->each(function (Crawler $node, $i){
+            $title = $node->filter('.spanfield0');
+            $title = trim(str_replace($title->filter('strong')->text(),'',$title->text()));
+
+            $dateAndTime = $node->filter('.spanfield2');
+            $dateAndTime = trim(str_replace($dateAndTime->filter('strong')->text(),'',$dateAndTime->text()));
+
+            $region = $node->filter('.spantable1sub1');
+            $region = trim(str_replace($region->filter('strong')->text(),'',$region->text()));
+
+            $url = $node->filter('.spantable.link a');
+            $url = $url->attr('href');
+
+            return array(
+                'title' => $title,
+                'dateAndTime' => $dateAndTime,
+                'reqion' => $region,
+                'url' => self::HOST_RESOURCE . $url
+            );
+        });
+        return $auctions;
+    }
 
 
 

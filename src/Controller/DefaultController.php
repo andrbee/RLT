@@ -21,7 +21,9 @@ class DefaultController extends Controller {
 	public function indexAction (Request $request) {
 
 		$auction = new Auction();
-		$auction->list();
+		echo '<pre>';
+		print_r($auction->list());
+		exit();
 
 		return $this->render('base.html.twig');
 	}
