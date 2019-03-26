@@ -22,7 +22,7 @@ class DefaultController extends Controller {
 
 		$auction = new Auction();
 		echo '<pre>';
-		print_r($auction->list());
+		print_r($auction->getList());
 		exit();
 
 		return $this->render('base.html.twig');
