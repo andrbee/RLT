@@ -1,0 +1,23 @@
+{# templates/Default/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for item in auctions %}
+            <div class="col-4">
+                <h6>{{ item.dateAndTime }}</h6>
+                <strong>{{ item.reqion }}</strong>
+            </div>
+            <div class="col-8">
+                <h5>{{ item.title }}</h5>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% if auctions|length >1 %}
+        <div class="col"><h4><strong>Всего: {{ auctions|length }}</strong></h4></div>
+        {% endif %}
+    </div>
+{% endblock %}

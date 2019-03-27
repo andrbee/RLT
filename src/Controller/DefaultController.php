@@ -21,11 +21,12 @@ class DefaultController extends Controller {
 	public function indexAction (Request $request) {
 
 		$auction = new Auction();
-		echo '<pre>';
-		print_r($auction->getList());
-		exit();
+		$auctions = $auction->getList();
 
-		return $this->render('base.html.twig');
+		return $this->render('default/index.html.twig',[
+			'title' => 'Аукционы Минской области',
+			'auctions' => $auctions
+		]);
 	}
 
 }
