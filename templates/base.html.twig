@@ -5,6 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/minty/bootstrap.min.css" rel="stylesheet"/>
+            <link href="{{ asset('css/common.scss') }}" rel="stylesheet"/>
         {% endblock %}
     </head>
     <body>
