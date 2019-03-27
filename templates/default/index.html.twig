@@ -4,10 +4,19 @@
 {% block title %}{{ title }} }}{% endblock %}
 
 {% block body %}
+    <div class="container">
+    <div class="row">
+        {% if auctions|length >1 %}
+            <div class="col"><h4><strong>Всего: {{ auctions|length }}</strong></h4></div>
+        {% endif %}
+    </div>
         {% for item in auctions %}
             <div class="item__auctions">
                 <div class="row">
                     <div class="col-4">
+                        <div class="map__item">
+
+                        </div>
                         <h6>{{ item.dateAndTime }}</h6>
                         <strong>{{ item.reqion }}</strong>
                     </div>
@@ -17,9 +26,5 @@
                 </div>
             </div>
         {% endfor %}
-    <div class="row">
-        {% if auctions|length >1 %}
-            <div class="col"><h4><strong>Всего: {{ auctions|length }}</strong></h4></div>
-        {% endif %}
     </div>
 {% endblock %}
