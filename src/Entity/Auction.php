@@ -47,6 +47,27 @@ class Auction {
         return $auctions;
     }
 
+    public function getAuctions($urls) {
+	    $client = new Client();
+        $requests = function ($total) {
+            $uri = 'http://127.0.0.1:8126/guzzle-server/perf';
+            for ($i = 0; $i < $total; $i++) {
+                yield new Request('GET', $uri);
+            }
+        };
+        $pool = new Pool($client, $requests, [
+            'concurrency' => 5,
+            'fulfilled' => function ($response, $index) use($requests, &$results) {
+                echo $index.' - '.$requests[$index]->getUri()->__toString().' --'. $response->getStatusCode().PHP_EOL;
+                $results[$index]=$response;
+            },
+            'rejected' => function ($reason, $index)use($requests, &$results)  {
+                echo $index.' - '.$requests[$index]->getUri()->__toString().' --'. $reason.PHP_EOL;
+                $results[$index]=$reason;
+            },
+        ]);
+    }
+
 
 
 	private function guzzleRequest($format, $url, $postdata='')	{
